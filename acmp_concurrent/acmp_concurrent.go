@@ -17,8 +17,8 @@ func Difficulties(urls []string) map[string]float64 {
 		m = map[string]float64{}
 	)
 	for _, url := range urls {
+		wg.Add(1)
 		go func(url string) {
-			wg.Add(1)
 			defer wg.Done()
 			res := Difficulty(url)
 			mu.Lock()
