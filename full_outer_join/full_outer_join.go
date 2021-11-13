@@ -17,8 +17,7 @@ func FullOuterJoin(f1Path, f2Path, resultPath string) {
 		log.Fatalf("couldn't open f2: %v", err)
 	}
 	m := map[string]bool{}
-	read(f1, m)
-	read(f2, m)
+	read(m, f1, f2)
 	lines := make([]string, 0, len(m))
 	for str, is := range m {
 		if is {
@@ -38,13 +37,15 @@ func FullOuterJoin(f1Path, f2Path, resultPath string) {
 	}
 }
 
-func read(file []byte, m map[string]bool)  {
-	s := strings.Split(string(file), "\n")
-	for _, v := range s {
-		if _, is := m[v]; is {
-			m[v] = false
-		} else {
-			m[v] = true
+func read(m map[string]bool, files ...[]byte)  {
+	for _, file := range files {
+		s := strings.Split(string(file), "\n")
+		for _, v := range s {
+			if _, is := m[v]; is {
+				m[v] = false
+			} else {
+				m[v] = true
+			}
 		}
 	}
 }
