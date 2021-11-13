@@ -4,17 +4,16 @@ func QuickSort(a []int) {
 	quickSort(a, 0, len(a)-1)
 }
 
-func quickSort(arr []int, low, high int) []int {
+func quickSort(arr []int, low, high int) {
 	if low < high {
 		var p int
-		arr, p = partition(arr, low, high)
-		arr = quickSort(arr, low, p-1)
-		arr = quickSort(arr, p+1, high)
+		p = partition(arr, low, high)
+		quickSort(arr, low, p-1)
+		quickSort(arr, p+1, high)
 	}
-	return arr
 }
 
-func partition(arr []int, low, high int) ([]int, int) {
+func partition(arr []int, low, high int) int {
 	pivot := arr[high]
 	i := low
 	for j := low; j < high; j++ {
@@ -24,5 +23,5 @@ func partition(arr []int, low, high int) ([]int, int) {
 		}
 	}
 	arr[i], arr[high] = arr[high], arr[i]
-	return arr, i
+	return i
 }
